@@ -1,0 +1,11 @@
+﻿To apply the Infragistics Silverlight IG theme to your Silverlight application, paste the following code into your App.xaml
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/IG/IG.MSControls.Core.Implicit.xaml"/>
+                <ResourceDictionary Source="Themes/IG/IG.MSControls.SDK.Implicit.xaml"/>
+                <ResourceDictionary Source="Themes/IG/IG.MSControls.Toolkit.Implicit.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>

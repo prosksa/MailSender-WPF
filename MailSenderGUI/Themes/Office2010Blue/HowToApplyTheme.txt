@@ -1,0 +1,11 @@
+﻿To apply the Infragistics Silverlight Office2010Blue theme to your Silverlight application, paste the following code into your App.xaml
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Office2010Blue/Office2010Blue.MSControls.Core.Implicit.xaml"/>
+                <ResourceDictionary Source="Themes/Office2010Blue/Office2010Blue.MSControls.SDK.Implicit.xaml"/>
+                <ResourceDictionary Source="Themes/Office2010Blue/Office2010Blue.MSControls.Toolkit.Implicit.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>

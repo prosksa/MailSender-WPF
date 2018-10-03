@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="MailSender.GUI.Views.SavePersonView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:l="clr-namespace:MailSender.GUI.Views"
+			 xmlns:vr="clr-namespace:MailSender.GUI.ValidationRules"
+			 DataContext="{Binding SenderModel, Source={StaticResource Locator}}"
+			 d:DesignHeight="100" d:DesignWidth="305">
+	<Grid Margin="10">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<TextBlock Text="ID:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right"/>
+		<TextBlock Text="Имя:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"/>
+		<TextBlock Text="Адрес:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right"/>
+
+		<!-- Text="{Binding CurrentPerson.Id, NotifyOnValidationError=True}" -->
+		<!--  Validation.Error="OnValidationError" -->
+		<TextBox Grid.Column="1" Grid.Row="0">
+			<TextBox.Text>
+				<Binding Path="CurrentPerson.Id" NotifyOnValidationError="True">
+					<Binding.ValidationRules>
+						<vr:RangeDataValidation Min="0" Max="65535"/>
+						<ExceptionValidationRule/>
+					</Binding.ValidationRules>
+				</Binding>
+			</TextBox.Text>
+			<!-- Ниже описывается шаблон, применяемый к элементу управления в случае если возникла ошибка валидации данных -->
+			<Validation.ErrorTemplate>
+				<ControlTemplate>
+					<DockPanel ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=AdornedElement}">
+						<TextBlock Text="!" Foreground="Red" FontWeight="Bold" DockPanel.Dock="Right" Margin="3,0,0,0"/>
+						<Border BorderThickness="2" BorderBrush="Red">
+							<AdornedElementPlaceholder Name="AdornedElement"/>
+							<!-- Собственно, здесь будет расположен сам визуальный элемент. Всё остальное будет расположено вокруг него. -->
+						</Border>
+					</DockPanel>
+				</ControlTemplate>
+			</Validation.ErrorTemplate>
+		</TextBox>
+		<TextBox Grid.Column="1" Grid.Row="1" Text="{Binding CurrentPerson.Name, NotifyOnValidationError=True, ValidatesOnNotifyDataErrors=True, ValidatesOnDataErrors=True}"  Validation.Error="OnValidationError"/>
+		<TextBox Grid.Column="1" Grid.Row="2" Text="{Binding CurrentPerson.Address, NotifyOnValidationError=True, ValidatesOnNotifyDataErrors=True, ValidatesOnDataErrors=True}" Validation.Error="OnValidationError"/>
+
+		<UniformGrid Columns="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"
+					VerticalAlignment="Top" HorizontalAlignment="Center">
+			<Button Content="Создать" Margin="0,10" Padding="25,3" Command="{Binding NewPersonCommand}"/>
+			<Button Content="Сохранить" Margin="0,10" Padding="25,3"
+					Command="{Binding SavePersonCommand}"
+					CommandParameter="{Binding CurrentPerson}"/>
+		</UniformGrid>
+	</Grid>
+</UserControl>

@@ -1,0 +1,204 @@
+﻿<Window
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:l="clr-namespace:MailSender.GUI"
+		xmlns:msc="clr-namespace:MailSender.Controls;assembly=MailSender.Controls" 
+		xmlns:wpfTool="http://schemas.xceed.com/wpf/xaml/toolkit" 
+		xmlns:cmd="clr-namespace:MailSender.GUI.MarkupExtTest"
+		xmlns:Views="clr-namespace:MailSender.GUI.Views"
+		x:Class="MailSender.GUI.MainWindow"
+		mc:Ignorable="d"
+		DataContext="{Binding SenderModel, Source={StaticResource Locator}}"
+		Title="Заголовок" 
+		Height="576" Width="886">
+
+	
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="Файл">
+				<MenuItem Header="Открыть" IsEnabled="False"/>
+				<MenuItem Header="Закрыть" IsEnabled="False"/>
+				<MenuItem Header="Сохранить" IsEnabled="False"/>
+				<Separator/>
+				<MenuItem Header="Выход" Command="{Binding ApplicationCloseCommand}"/>
+				<MenuItem Header="Закрыть главное окно" Command="{cmd:CloseWindowCommand}"/>
+				<MenuItem Header="Закрыть текущее окно" 
+						  Command="{cmd:CloseWindowCommand}"
+						  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+			</MenuItem>
+			<MenuItem Header="Сервис" IsEnabled="False"/>
+			<MenuItem Header="Помощь" IsEnabled="False"/>
+		</Menu>
+		<StatusBar DockPanel.Dock="Bottom">
+			<TextBlock Text="Ready!"/>
+		</StatusBar>
+		<TabControl x:Name="MailTabControl">
+			<TabItem>
+				<TabItem.Header>
+					<StackPanel Orientation="Horizontal">
+						<Image Source="img/email.png" Height="15"/>
+						<TextBlock Text="Списки рассылки" VerticalAlignment="Center" Margin="3,0,0,0"/>
+					</StackPanel>
+				</TabItem.Header>
+				<DockPanel>
+					<ToolBarTray DockPanel.Dock="Top">
+						<ToolBarTray.Resources>
+							<Style TargetType="{x:Type Image}">
+								<Setter Property="Height" Value="15"/>
+							</Style>
+						</ToolBarTray.Resources>
+						<ToolBar>
+							<TextBlock Text="Отправитель:"/>
+							<ComboBox x:Name="SenderName" Width="150" SelectedIndex="0" ItemsSource="{x:Static l:Senders.SendersList}" DisplayMemberPath="Key">
+								
+							</ComboBox>
+							<Button ToolTip="Добавление отправителя">
+								<Image Source="img/add.png"/>
+							</Button>
+							<Button ToolTip="Редактирование отправителя">
+								<Image Source="img/editor.png"/>
+							</Button>
+							<Button ToolTip="Удаление отправителя">
+								<Image Source="img/remove.png"/>
+							</Button>
+						</ToolBar>
+
+						<ToolBar Band="1" Width="340">
+							<TextBlock Text="Почтовый сервер:"/>
+							<ComboBox x:Name="ServerName" Width="150" SelectedIndex="0" ItemsSource="{x:Static l:Servers.ServersList}" DisplayMemberPath="">
+							</ComboBox>
+							<Button ToolTip="Добавление сервера">
+								<Image Source="img/add.png"/>
+							</Button>
+							<Button ToolTip="Редактирование сервера">
+								<Image Source="img/editor.png"/>
+							</Button>
+							<Button ToolTip="Удаление сервера">
+								<Image Source="img/remove.png"/>
+							</Button>
+						</ToolBar>
+
+						<ToolBar>
+							<TextBlock Text="Перейти в планировщик"/>
+							<Button ToolTip="Удаление сервера">
+								<Image Source="img/Schedule.png"/>
+							</Button>
+						</ToolBar>
+
+						<ToolBar Band="1">
+							<TextBlock Text="Список рассылки:"/>
+							<Button ToolTip="Добавить">
+								<Image Source="img/add.png"/>
+							</Button>
+							<Button ToolTip="Редактировать">
+								<Image Source="img/editor.png"/>
+							</Button>
+							<Button ToolTip="Удалить">
+								<Image Source="img/remove.png"/>
+							</Button>
+						</ToolBar>
+						<ToolBar Band="1" BandIndex="2">
+							<TextBlock Text="Переход:" Margin="0,0,2,0"/>
+							<msc:TabControlSwitcher Height="20" Forward="OnTabSwitcher_Forward" Backward="OnTabSwitcher_Backward"/>
+						</ToolBar>
+						<msc:ToolBarControl Height="25" Text="123" Band="0" BandIndex="3"/>
+					</ToolBarTray>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Views:PersonesInfoView Grid.Row="0"/>
+						<Views:SavePersonView Grid.Row="1"/>
+					</Grid>
+
+					<!--<GroupBox Header="Рассылки">
+						<DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Persones}"
+								  VerticalGridLinesBrush="DarkGray" HorizontalGridLinesBrush="{x:Null}"
+								  AlternationCount="2" AlternatingRowBackground="LightGray">
+							<DataGrid.Columns>
+								<DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+								<DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}"/>
+								<DataGridTextColumn Header="Адрес" MinWidth="300" Binding="{Binding Address}"/>
+							</DataGrid.Columns>
+						</DataGrid>
+					</GroupBox>-->
+				</DockPanel>
+			</TabItem>
+			<TabItem>
+				<TabItem.Header>
+					<StackPanel Orientation="Horizontal">
+						<Image Source="img/Schedule.png" Height="15"/>
+						<TextBlock Text="Планировщик" VerticalAlignment="Center" Margin="3,0,0,0"/>
+					</StackPanel>
+				</TabItem.Header>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200"/>
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<GroupBox Header="Управление" Grid.Column="0">
+						<StackPanel>
+							<StackPanel.Resources>
+								<Style TargetType="{x:Type Button}">
+									<Setter Property="Margin" Value="5,2"/>
+								</Style>
+							</StackPanel.Resources>
+							<Calendar/>
+							<DockPanel Margin="5,0">
+								<TextBlock Text="Время:"/>
+								<wpfTool:TimePicker/>
+							</DockPanel>
+							<Button>
+								<DockPanel>
+									<Image Source="img/planning.png" Height="15"/>
+									<TextBlock Text="Запланировать"/>
+								</DockPanel>
+							</Button>
+							<Button>
+								<DockPanel>
+									<Image Source="img/email.png" Height="15"/>
+									<TextBlock Text="Отправить сейчас"/>
+								</DockPanel>
+							</Button>
+						</StackPanel>
+					</GroupBox>
+				</Grid>
+			</TabItem>
+			<TabItem>
+				<TabItem.Header>
+					<StackPanel Orientation="Horizontal">
+						<Image Source="img/Editor.png" Height="15"/>
+						<TextBlock Text="Редактор писем" VerticalAlignment="Center" Margin="3,0,0,0"/>
+					</StackPanel>
+				</TabItem.Header>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" MinWidth="250"/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					<GroupBox Header="Письма" Grid.RowSpan="2" Margin="0,0,3,0">
+						<ListBox>
+							<ListBoxItem Content="Письмо 1"/>
+							<ListBoxItem Content="Письмо 2"/>
+							<ListBoxItem Content="Письмо 3"/>
+						</ListBox>
+					</GroupBox>
+					<GroupBox Header="Тема" Grid.Column="1" Grid.Row="0">
+						<TextBlock/>
+					</GroupBox>
+					<GroupBox Header="Тело" Grid.Column="1" Grid.Row="1">
+						<RichTextBox/>
+					</GroupBox>
+					<GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="2"/>
+				</Grid>
+			</TabItem>
+		</TabControl>
+	</DockPanel>
+</Window>

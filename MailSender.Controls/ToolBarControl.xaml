@@ -1,0 +1,15 @@
+﻿<ToolBar x:Class="MailSender.Controls.ToolBarControl"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:local="clr-namespace:MailSender.Controls"
+			 mc:Ignorable="d" 
+			 d:DesignHeight="30">
+	<TextBlock VerticalAlignment="Center"
+			   Text="{Binding Text, RelativeSource={RelativeSource AncestorType=local:ToolBarControl}}"/>
+	<ComboBox Width="150" Name="ItemsBox"/>
+	<Button Content="Add" Command="{Binding AddCommand, RelativeSource={RelativeSource AncestorType=local:ToolBarControl}}"/>
+	<Button Content="Remove"/>
+	<Button Content="Edit" CommandParameter="{Binding SelectedItem, ElementName=ItemsBox}"/>
+</ToolBar>
