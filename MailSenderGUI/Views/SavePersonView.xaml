@@ -33,14 +33,12 @@
 					</Binding.ValidationRules>
 				</Binding>
 			</TextBox.Text>
-			<!-- Ниже описывается шаблон, применяемый к элементу управления в случае если возникла ошибка валидации данных -->
 			<Validation.ErrorTemplate>
 				<ControlTemplate>
 					<DockPanel ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=AdornedElement}">
 						<TextBlock Text="!" Foreground="Red" FontWeight="Bold" DockPanel.Dock="Right" Margin="3,0,0,0"/>
 						<Border BorderThickness="2" BorderBrush="Red">
 							<AdornedElementPlaceholder Name="AdornedElement"/>
-							<!-- Собственно, здесь будет расположен сам визуальный элемент. Всё остальное будет расположено вокруг него. -->
 						</Border>
 					</DockPanel>
 				</ControlTemplate>

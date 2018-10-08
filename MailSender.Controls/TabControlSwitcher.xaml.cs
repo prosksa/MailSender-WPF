@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace MailSender.Controls
 {
-	/// <summary>
-	/// Логика взаимодействия для TabControlSwitcher.xaml
-	/// </summary>
 	public partial class TabControlSwitcher : UserControl
 	{
 		public event EventHandler Forward;

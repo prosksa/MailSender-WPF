@@ -8,20 +8,11 @@ using System.Windows.Controls;
 
 namespace MailSender.GUI.ValidationRules
 {
-    /// <summary>
-    /// Наше собственное правило проверки данных
-    /// </summary>
     public class RangeDataValidation : ValidationRule
     {
         public int? Min { get; set; }
         public int? Max { get; set; }
 
-        /// <summary>
-        /// Метод проверки данных
-        /// </summary>
-        /// <param name="value">Проверяемое значение</param>
-        /// <param name="culture">Текущая культура</param>
-        /// <returns>Результат проверки</returns>
         public override ValidationResult Validate(object value, CultureInfo culture)
         {
             if (!(value is int int_value))
